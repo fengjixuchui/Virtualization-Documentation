@@ -7,7 +7,7 @@ ms.topic: troubleshooting
 ms.prod: containers
 
 description: Solutions for common issues when deploying Kubernetes and joining Windows nodes.
-keywords: kubernetes, 1.12, linux, compile
+keywords: kubernetes, 1.14, linux, compile
 ---
 
 # Troubleshooting Kubernetes #
@@ -28,13 +28,41 @@ This page is subdivided into the following categories:
 You should see kubelet, kube-proxy, and (if you chose Flannel as your networking solution) flanneld host-agent processes running on your node, with running logs being displayed in separate PoSh windows. In addition to this, your Windows node should be listed as “Ready” in your Kubernetes cluster.
 
 ### Can I configure to run all of this in the background instead of PoSh windows? ###
-Starting with Kubernetes version 1.11, kubelet & kube-proxy can be run as native [Windows Services](https://kubernetes.io/docs/getting-started-guides/windows/#kubelet-and-kube-proxy-can-now-run-as-windows-services). You can also always use alternative service managers like [nssm.exe](https://nssm.cc/) to always run these processes (flanneld, kubelet & kube-proxy) in the background for you.
+Starting with Kubernetes version 1.11, kubelet & kube-proxy can be run as native [Windows Services](https://kubernetes.io/docs/getting-started-guides/windows/#kubelet-and-kube-proxy-can-now-run-as-windows-services). You can also always use alternative service managers like [nssm.exe](https://nssm.cc/) to always run these processes (flanneld, kubelet & kube-proxy) in the background for you. See [Windows Services on Kubernetes](./kube-windows-services.md) for example steps.
 
+### I have problems running Kubernetes processes as Windows services ###
+For initial troubleshooting, you can use the following flags in [nssm.exe](https://nssm.cc/) to redirect stdout and stderr to a output file:
+```
+nssm set <Service Name> AppStdout C:\k\mysvc.log
+nssm set <Service Name> AppStderr C:\k\mysvc.log
+```
+For additional details, see official [nssm usage](https://nssm.cc/usage) docs.
 
 ## Common networking errors ##
 
-### My Windows pods do not have network connectivity ###
-If you are using any virtual machines, ensure that MAC spoofing is enabled on all the VM network adapter(s). See [anti-spoofing protection](./getting-started-kubernetes-windows.md#disable-anti-spoofing-protection) for more details.
+### I am seeing errors such as "hnsCall failed in Win32: The wrong diskette is in the drive." ###
+This error can occur when making custom modifications to HNS objects or installing new Windows Update that introduce changes to HNS without tearing down old HNS objects. It indicates that a HNS object which was previously created before an update is incompatible with the currently installed HNS version.
+
+On Windows Server 2019 (and below), users can delete HNS objects by deleting the HNS.data file 
+```
+Stop-Service HNS
+rm C:\ProgramData\Microsoft\Windows\HNS\HNS.data
+Start-Service HNS
+```
+
+Users should be able to directly delete any incompatible HNS endpoints or networks:
+```
+hnsdiag list endpoints
+hnsdiag delete endpoints <id>
+hnsdiag list networks 
+hnsdiag delete networks <id>
+Restart-Service HNS
+```
+
+Users on Windows Server, version 1903 can go to the following registry location and delete any NICs starting with the network name (e.g. `vxlan0` or `cbr0`):
+```
+\\Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmsmp\parameters\NicList
+```
 
 
 ### My Windows pods cannot ping external resources ###
@@ -52,6 +80,22 @@ One of the Kubernetes networking requirements (see [Kubernetes model](https://ku
 				]
 ```
 
+### My Windows node cannot access a NodePort service ###
+Local NodePort access from the node itself will fail. This is a known limitation. NodePort access will work from other nodes or external clients.
+
+### After some time, vNICs and HNS endpoints of containers are being deleted ###
+This issue can be caused when the `hostname-override` parameter is not passed to [kube-proxy](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/). To resolve it, users need to pass the hostname to kube-proxy as follows:
+```
+C:\k\kube-proxy.exe --hostname-override=$(hostname)
+```
+
+### On Flannel (vxlan) mode, my pods are having connectivity issues after rejoining the node ###
+Whenever a previously deleted node is being rejoined to the cluster, flannelD will try to assign a new pod subnet to the node. Users should remove the old pod subnet configuration files in the following paths:
+```powershell
+Remove-Item C:\k\SourceVip.json
+Remove-Item C:\k\SourceVipRequest.json
+```
+
 ### After launching start.ps1, Flanneld is stuck in "Waiting for the Network to be created" ###
 There are numerous reports of this issue which are being investigated; most likely it is a timing issue for when the management IP of the flannel network is set. A workaround is to simply relaunch start.ps1 or relaunch it manually as follows:
 ```
@@ -61,14 +105,33 @@ PS C:> C:\flannel\flanneld.exe --kubeconfig-file=c:\k\config --iface=<Windows_Wo
 
 There is also a [PR](https://github.com/coreos/flannel/pull/1042) that addresses this issue under review currently.
 
+
+### On Flannel (host-gw), my Windows pods do not have network connectivity ###
+Should you wish to use l2bridge for networking (aka [flannel host-gateway](./network-topologies.md#flannel-in-host-gateway-mode)), you should ensure MAC address spoofing is enabled for the Windows container host VMs (guests). To achieve this, you should run the following as Administrator on the machine hosting the VMs (example given for Hyper-V):
+
+```powershell
+Get-VMNetworkAdapter -VMName "<name>" | Set-VMNetworkAdapter -MacAddressSpoofing On
+```
+
+> [!TIP]
+> If you are using a VMware-based product to meet your virtualization needs, please look into enabling [promiscuous mode](https://kb.vmware.com/s/article/1004099) for the MAC spoofing requirement.
+
+>[!TIP]
+> If you are deploying Kubernetes on Azure or IaaS VMs from other cloud providers yourself, you can also use [overlay networking](./network-topologies.md#flannel-in-vxlan-mode) instead.
+
 ### My Windows pods cannot launch because of missing /run/flannel/subnet.env ###
-This indicates that Flannel didn't launch correctly. You can either try to restart flanneld.exe or you can copy the files over manually from `/run/flannel/subnet.env`  on the Kubernetes master to `C:\run\flannel\subnet.env` on the Windows worker node and modify the `FLANNEL_SUBNET` row to a different number. For example, if node subnet 10.244.4.1/24 is desired:
+This indicates that Flannel didn't launch correctly. You can either try to restart flanneld.exe or you can copy the files over manually from `/run/flannel/subnet.env`  on the Kubernetes master to `C:\run\flannel\subnet.env` on the Windows worker node and modify the `FLANNEL_SUBNET` row to the subnet that was assigned. For example, if node subnet 10.244.4.1/24 was assigned:
 ```
 FLANNEL_NETWORK=10.244.0.0/16
 FLANNEL_SUBNET=10.244.4.1/24
 FLANNEL_MTU=1500
 FLANNEL_IPMASQ=true
 ```
+It is safer to let flanneld.exe generate this file for you.
+
+### Pod-to-pod connectivity between hosts is broken on my Kubernetes cluster running on vSphere 
+Since both vSphere and Flannel reserves port 4789 (default VXLAN port) for overlay networking, packets can end up being intercepted. If vSphere is used for overlay networking, it should be configured to use a different port in order to free up 4789.  
+
 
 ### My endpoints/IPs are leaking ###
 There exist 2 currently known issues that can cause endpoints to leak. 
@@ -94,7 +157,7 @@ Get-HnsNetwork | ? Name -ieq "cbr0"
 Get-NetAdapter | ? Name -Like "vEthernet (Ethernet*"
 ```
 
-Consult the output of the `start-kubelet.ps1` script to see if there are errors during virtual network creation.
+Often it is worthwhile to modify the [InterfaceName](https://github.com/Microsoft/SDN/blob/master/Kubernetes/flannel/l2bridge/start.ps1#L6) parameter of the start.ps1 script, in cases where the host's network adapter isn't "Ethernet". Otherwise, consult the output of the `start-kubelet.ps1` script to see if there are errors during virtual network creation. 
 
 ### Pods stop resolving DNS queries successfully after some time alive ###
 There is a known DNS caching issue in the networking stack of Windows Server, version 1803 and below that may sometimes cause DNS requests to fail. To work around this issue, you can set the max TTL cache values to zero using the following registry keys:
