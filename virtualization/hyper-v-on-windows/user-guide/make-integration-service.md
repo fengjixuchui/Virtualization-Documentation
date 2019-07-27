@@ -11,7 +11,7 @@ ms.assetid: 1ef8f18c-3d76-4c06-87e4-11d8d4e31aea
 
 # Make your own integration services
 
-Starting in Windows 10 Anniversary Update, anyone can make applications that communicate between the Hyper-V host and its virtual machines using Hyper-V sockets -- a Windows Socket with a new address family and specialized endpoint for targeting virtual machines.  All communication over Hyper-V sockets runs without using networking and all data stays on the same physical memory.   Applications using Hyper-V sockets are similar to Hyper-V's integration services.
+Starting in Windows 10 Anniversary Update, anyone can make applications that communicate between the Hyper-V host and its virtual machines using Hyper-V sockets -- a Windows Socket with a new address family and specialized endpoint for targeting virtual machines.  All communication over Hyper-V sockets runs without using networking and all data stays on the same physical memory. Applications using Hyper-V sockets are similar to Hyper-V's integration services.
 
 This document walks through creating a simple program built on Hyper-V sockets.
 
@@ -22,7 +22,7 @@ This document walks through creating a simple program built on Hyper-V sockets.
 **Supported Guest OS**
 * Windows 10 and later
 * Windows Server 2016 and later
-* Linux guests with Linux Integration Services (see [Supported Linux and FreeBSD virtual machines for Hyper-V on Windows](https://technet.microsoft.com/library/dn531030.aspx))
+* Linux guests with Linux Integration Services (see [Supported Linux and FreeBSD virtual machines for Hyper-V on Windows](https://docs.microsoft.com/windows-server/virtualization/hyper-v/Supported-Linux-and-FreeBSD-virtual-machines-for-Hyper-V-on-Windows))
 > **Note:** A supported Linux guest must have kernel support for:
 > ```bash
 > CONFIG_VSOCKET=y
@@ -43,7 +43,7 @@ Requirements:
 * [Windows 10 SDK](https://developer.microsoft.com/windows/downloads/windows-10-sdk) -- pre-installed in Visual Studio 2015 with Update 3 and later.
 * A computer running one of the host operating systems above with at least one vitual machine. -- this is for testing your application.
 
-> **Note:** The API for Hyper-V sockets became publicly available in Windows 10 slightly after .  Applications that use HVSocket will run on any Widnows 10 host and guest but can only be developed with a Windows SDK later than build 14290.
+> **Note:** The API for Hyper-V sockets became publicly available in Windows 10 Anniversary Update. Applications that use HVSocket will run on any Windows 10 host and guest but can only be developed with a Windows SDK later than build 14290.
 
 ## Register a new application
 In order to use Hyper-V sockets, the application must be registered with the Hyper-V Host's registry.
@@ -112,9 +112,7 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\G
 
 In the most basic case, defining a socket requires an address family, connection type, and protocol.
 
-Here is a simple [socket definition](
-https://msdn.microsoft.com/en-us/library/windows/desktop/ms740506(v=vs.85).aspx
-)
+Here is a simple [socket definition](https://docs.microsoft.com/windows/desktop/api/winsock2/nf-winsock2-socket)
 
 ``` C
 // Windows
@@ -147,7 +145,7 @@ int sock = socket(AF_VSOCK, SOCK_STREAM, 0);
 
 Bind associates a socket with connection information.
 
-The function definition is copied below for convinience, read more about bind [here](https://msdn.microsoft.com/en-us/library/windows/desktop/ms737550.aspx).
+The function definition is copied below for convinience, read more about bind [here](https://docs.microsoft.com/windows/desktop/api/winsock/nf-winsock-bind).
 
 ``` C
 // Windows
@@ -197,7 +195,7 @@ In lieu of an IP or hostname, AF_HYPERV endpoints rely heavily on two GUIDs:
   ```PowerShell
   (Get-VM -Name $VMName).Id
   ```
-* Service ID – GUID, [described above](#RegisterANewApplication), with which the application is registered in the Hyper-V host registry.
+* Service ID – GUID, [described above](#register-a-new-application), with which the application is registered in the Hyper-V host registry.
 
 There is also a set of VMID wildcards available when a connection isn't to a specific virtual machine.
 
@@ -231,6 +229,6 @@ Listen()
 Accept()
 
 ## Useful links
-[Complete WinSock API](https://msdn.microsoft.com/en-us/library/windows/desktop/ms741394.aspx)
+[Complete WinSock API](https://docs.microsoft.com/windows/desktop/WinSock/winsock-functions)
 
 [Hyper-V Integration Services reference](../reference/integration-services.md)

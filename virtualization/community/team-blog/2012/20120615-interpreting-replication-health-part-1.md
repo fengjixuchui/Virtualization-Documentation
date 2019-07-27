@@ -1,5 +1,4 @@
 ---
-layout:     post
 title:      "Interpreting Replication Health – Part 1"
 date:       2012-06-15 03:33:00
 categories: hvr
@@ -42,7 +41,7 @@ The two-part FAQ post explains the concept of Replication Health and provides gu
 
   * UI – As seen in the above picture
   * PowerShell – Using the **Measure-VMReplication** cmdlet.
-  * WMI – From ** **[ **Msvm_ComputerSystem**](http://msdn.microsoft.com/en-us/library/hh850116\(v=vs.85\)) **** class where ReplicationState is a property
+  * WMI – From ** **[ **Msvm_ComputerSystem**](https://msdn.microsoft.com/library/hh850116\(v=vs.85\)) **** class where ReplicationState is a property
 
 
 
@@ -252,7 +251,7 @@ Hyper-V Replica aggregates these events into 3 potential values which can be que
 
   * UI – As seen in Q1 (above)
   * PowerShell – Using the **Measure-VMReplication** cmdlet.
-  * WMI – From ** **[ **Msvm_ComputerSystem,**](http://msdn.microsoft.com/en-us/library/hh850116\(v=vs.85\)) where ReplicationHealth is a property
+  * WMI – From ** **[ **Msvm_ComputerSystem,**](https://msdn.microsoft.com/library/hh850116\(v=vs.85\)) where ReplicationHealth is a property
 
 
 

@@ -7,7 +7,7 @@ ms.topic: get-started-article
 ms.prod: containers
 
 description: Deploying Kubernetes resoureces on a mixed-OS Kubernetes cluster.
-keywords: kubernetes, 1.12, windows, getting started
+keywords: kubernetes, 1.14, windows, getting started
 ms.assetid: 3b05d2c2-4b9b-42b4-a61b-702df35f5b17
 ---
 # Deploying Kubernetes Resources #
@@ -26,7 +26,7 @@ kubectl get nodes
 
 If everything looks good, you can download and run the following service:
 > [!Important] 
-> Before `kubectl apply`, make sure to double-check/modify the `microsoft/windowsservercore` image in the sample file to [a container image that is runnable by your nodes](https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility#choosing-container-os-versions)!
+> Before `kubectl apply`, make sure to double-check/modify the `microsoft/windowsservercore` image in the sample file to [a container image that is runnable by your nodes](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility#choosing-container-os-versions)!
 
 ```bash
 wget https://raw.githubusercontent.com/Microsoft/SDN/master/Kubernetes/flannel/l2bridge/manifests/simpleweb.yml -O win-webserver.yaml
@@ -67,3 +67,7 @@ In this section, we covered how to schedule Kubernetes resources on Windows node
 
 > [!div class="nextstepaction"]
 > [Troubleshooting](./common-problems.md)
+
+Otherwise, you may also be interested in running Kubernetes components as Windows services:
+> [!div class="nextstepaction"]
+> [Windows Services](./kube-windows-services.md)

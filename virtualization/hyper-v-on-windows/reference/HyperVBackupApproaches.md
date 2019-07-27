@@ -11,18 +11,17 @@ To understand this architecture better – refer to this presentation:
 https://channel9.msdn.com/Events/TechEd/Europe/2014/CDP-B318 
 
 There is also an example on how to use these APIs available here:
-https://msconfiggallery.cloudapp.net/packages/xHyper-VBackup
+https://www.powershellgallery.com/packages/xHyper-VBackup
 ## Methods for reading backups from WMI Based Backup
 When creating virtual machine backups using Hyper-V WMI, there are three methods for reading the actual data from the backup.  Each has unique advantages and disadvantages.
 ### WMI Export
 Developers can export the backup data through the Hyper-V WMI interfaces (as used in the above example).  Hyper-V will compile the changes into a virtual hard drive and copy the file to the requested location.  This method is easy to use, works for all scenarios and is remotable.  However, the virtual hard drive generated often creates a large amount of data to transfer over the network.
 ### Win32 APIs
-Developers can use the SetVirtualDiskInformation, GetVirtualDiskInformation and QueryChangesVirtualDisk APIs on the Virtual Hard Disk Win32 API set as documented here: https://docs.microsoft.com/en-us/windows/desktop/api/_vhd/ 
+Developers can use the SetVirtualDiskInformation, GetVirtualDiskInformation and QueryChangesVirtualDisk APIs on the Virtual Hard Disk Win32 API set as documented here: https://docs.microsoft.com/windows/desktop/api/_vhd/ 
 Note that to use these APIs, Hyper-V WMI still needs to be used to create reference points on associated virtual machines.  These Win32 APIs then allow for efficient access to the data of the backed up virtual machine.  The Win32 APIs do have several limitations:
 *	They can only be accessed locally
 *	The do not support reading data from shared virtual hard disk files
 *	They return data addresses that are relative to the internal structure of the virtual hard disk
 
 ### Remote Shared Virtual Disk Protocol
-Finally, if a developer needs to efficiently access backup data information from a shared virtual hard disk file – they will need to use the Remote Shared Virtual Disk Protocol.  This protocol is documented here:
-https://msdn.microsoft.com/en-us/library/dn393384.aspx
+Finally, if a developer needs to efficiently access backup data information from a shared virtual hard disk file – they will need to use the Remote Shared Virtual Disk Protocol.  This protocol is documented [here](https://docs.microsoft.com/openspecs/windows_protocols/ms-rsvd/c865c326-47d6-4a91-a62d-0e8f26007d15).

@@ -1,5 +1,4 @@
 ---
-layout:     post
 title:      "Hyper-V Replica Powershell Series&#58; Creating Hyper-V Replica Broker"
 date:       2012-08-14 23:09:00
 categories: hvr
@@ -86,7 +85,7 @@ To create a Hyper-V Replica Broker in a DHCP environment, use the following cmdl
     
       26: Start-ClusterGroup -Name $BrokerName | Out-Null
 
-To specify a static IP address for the Hyper-V Replica Broker, specify the IP address in the StaticAddress parameter of the [Add-ClusterServerRole](http://technet.microsoft.com/en-us/library/ee461053)
+To specify a static IP address for the Hyper-V Replica Broker, specify the IP address in the StaticAddress parameter of the [Add-ClusterServerRole](https://technet.microsoft.com/library/ee461053)
     
     
        1: #Specify the name for the Broker and static IP address
@@ -169,4 +168,4 @@ To specify a static IP address for the Hyper-V Replica Broker, specify the IP ad
     
       27: Start-ClusterGroup -Name $BrokerName | Out-Null
 
-Once the Hyper-V Replica Broker is created, enable the cluster to receive replication traffic by using the [Set-VMReplicationServer](http://technet.microsoft.com/en-us/library/hh848598) cmdlet.
+Once the Hyper-V Replica Broker is created, enable the cluster to receive replication traffic by using the [Set-VMReplicationServer](https://technet.microsoft.com/library/hh848598) cmdlet.

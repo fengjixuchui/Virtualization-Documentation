@@ -1,5 +1,4 @@
 ---
-layout:     post
 title:      "Visual Studio Lab Management 2010 beta 2"
 date:       2009-11-05 22:20:00
 categories: net
@@ -67,7 +66,7 @@ Hello, this is Bryon Surace again.  I’m a senior program manager on the Windo
 
 
 
-[Visual Studio Download Page](http://msdn.microsoft.com/en-us/vstudio/dd582936.aspx) – you can download all the required components from there. This [video](https://channel9.msdn.com/shows/10-4/10-4-Episode-33-Downloading-and-Installing-Visual-Studio-2010-Beta-2/) can guide you through the download and installation process of TFS. And check out the [Lab Management blog](http://blogs.msdn.com/lab_management/).
+[Visual Studio Download Page](https://msdn.microsoft.com/vstudio/dd582936.aspx) – you can download all the required components from there. This [video](https://channel9.msdn.com/shows/10-4/10-4-Episode-33-Downloading-and-Installing-Visual-Studio-2010-Beta-2/) can guide you through the download and installation process of TFS. And check out the [Lab Management blog](http://blogs.msdn.com/lab_management/).
 
  
 

@@ -1,5 +1,4 @@
 ---
-layout:     post
 title:      "Live Meeting for Influencers, 1.12.10 at 10&#58;00 am PST&#58; Moving from VMware to Microsoft"
 date:       2010-01-05 18:19:08
 categories: community
@@ -8,7 +7,7 @@ On **Tuesday, January 12, 2010 10:00 AM-11:00 AM.,** we are hosting a Live Meeti
 
 Please note: 
 
-  * This Live Meeting presentation is exclusive to members of the **System Center** **Influencers Program**.   Not a member?  Visit [the program information page on TechNet](http://technet.microsoft.com/en-us/ee532416.aspx) to learn more and apply to join. 
+  * This Live Meeting presentation is exclusive to members of the **System Center** **Influencers Program**.   Not a member?  Visit [the program information page on TechNet](https://technet.microsoft.com/ee532416.aspx) to learn more and apply to join. 
   * [Join information is available on the System Center Influencers Program portal](https://sharepoint.connect.microsoft.com/SystemCenterCommunity/Lists/Announcements/DispForm.aspx?ID=18&Source=https%3A%2F%2Fsharepoint%2Econnect%2Emicrosoft%2Ecom%2FSystemCenterCommunity%2FLists%2FAnnouncements%2FAllItems%2Easpx).  Members of the program will need to log into the Connect site to access the Live Meeting join information. 
 
 

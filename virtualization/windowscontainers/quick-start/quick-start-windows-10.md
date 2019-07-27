@@ -14,13 +14,13 @@ ms.assetid: bb9bfbe0-5bdc-4984-912f-9c93ea67105f
 
 > [!div class="op_single_selector"]
 > - [Linux Containers on Windows](quick-start-windows-10-linux.md)
-> - [Windows Containers on Windows](quick-start-windows-10.md)
+> - [Windows containers on Windows](quick-start-windows-10.md)
 
 The exercise will walk through creating and running Windows containers on Windows 10.
 
 In this quick start you will accomplish:
 
-1. Installing Docker for Windows
+1. Installing Docker Desktop
 2. Running a simple Windows container
 
 This quick start is specific to Windows 10. Additional quick start documentation can be found in the table of contents on the left-hand side of this page.
@@ -28,7 +28,7 @@ This quick start is specific to Windows 10. Additional quick start documentation
 ## Prerequisites
 Please make sure you meet the following requirements:
 - One physical computer system running Windows 10 Professional or Enterprise with Anniversary Update (version 1607) or later. 
-- Make sure [Hyper-V](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/reference/hyper-v-requirements) is enabled.
+- Make sure [Hyper-V](https://docs.microsoft.com/virtualization/hyper-v-on-windows/reference/hyper-v-requirements) is enabled.
 
 ***Hyper-V isolation:***
 Windows Server Containers require Hyper-V isolation on Windows 10 in order to provide developers with the same kernel version and configuration that will be used in production, more about Hyper-V isolation can be found on the [About Windows container](../about/index.md) page.
@@ -36,13 +36,13 @@ Windows Server Containers require Hyper-V isolation on Windows 10 in order to pr
 > [!NOTE]
 > In the release of Windows October Update 2018, we no longer disallow users from running a Windows container in process-isolation mode on Windows 10 Enterprise or Professional for dev/test purposes. See the [FAQ](../about/faq.md) to learn more.
 
-## Install Docker for Windows
+## Install Docker Desktop
 
-Download [Docker for Windows](https://store.docker.com/editions/community/docker-ce-desktop-windows) and run the installer (You will be required to login. Create an account if you don't have one already). [Detailed installation instructions](https://docs.docker.com/docker-for-windows/install) are available in the Docker documentation.
+Download [Docker Desktop](https://store.docker.com/editions/community/docker-ce-desktop-windows) and run the installer (You will be required to login. Create an account if you don't have one already). [Detailed installation instructions](https://docs.docker.com/docker-for-windows/install) are available in the Docker documentation.
 
 ## Switch to Windows containers
 
-After installation Docker for Windows defaults to running Linux containers. Switch to Windows containers using either the Docker tray-menu or by running the following command in a PowerShell prompt:
+After installation Docker Desktop defaults to running Linux containers. Switch to Windows containers using either the Docker tray-menu or by running the following command in a PowerShell prompt:
 
 ```console
 & $Env:ProgramFiles\Docker\Docker\DockerCli.exe -SwitchDaemon .
@@ -68,7 +68,7 @@ microsoft/nanoserver   latest              105d76d0f40e        4 days ago       
 ```
 
 > [!IMPORTANT]
-> Please read the Windows Containers OS Image [EULA](../images-eula.md).
+> Please read the Windows containers OS image [EULA](../images-eula.md).
 
 ## Run Your First Windows Container
 
@@ -118,7 +118,7 @@ Finally, to run the container, use the `docker run` command.
 docker run --rm helloworld cmd.exe /s /c type Hello.txt
 ```
 
-The outcome of the `docker run` command is that a Hyper-V container was created from the 'HelloWorld' image, an instance of cmd was started in the container and executed a reading of our file (output echoed to the shell), and then the container stopped and removed.
+The outcome of the `docker run` command is that a container running under Hyper-V isolation was created from the 'HelloWorld' image, an instance of cmd was started in the container and executed a reading of our file (output echoed to the shell), and then the container stopped and removed.
 
 ## Next Steps
 
