@@ -5,9 +5,7 @@ keywords: docker, containers, vms, virtual machines
 author: jasongerend
 ms.author: jgerend
 ms.date: 10/21/2019
-ms.topic: article
-ms.prod: windows-containers
-ms.service: windows-containers
+ms.topic: overview
 ---
 # Containers vs. virtual machines
 
@@ -31,7 +29,7 @@ In contrast to containers, VMs run a complete operating system–including its o
 
 The following table shows some of the similarities and differences of these complementary technologies.
 
-|                 | Virtual machine  | Container  |
+|Feature    | Virtual machine  | Container  |
 | --------------  | ---------------- | ---------- |
 | Isolation       | Provides complete isolation from the host operating system and other VMs. This is useful when a strong security boundary is critical, such as hosting apps from competing companies on the same server or cluster. | Typically provides lightweight isolation from the host and other containers, but doesn't provide as strong a security boundary as a VM. (You can increase the security by using [Hyper-V isolation mode](../manage-containers/hyperv-container.md) to isolate each container in a lightweight VM). |
 | Operating system | Runs a complete operating system including the kernel, thus requiring more system resources (CPU, memory, and storage). | Runs the user mode portion of an operating system, and can be tailored to contain just the needed services for your app, using fewer system resources. |

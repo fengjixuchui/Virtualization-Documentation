@@ -4,9 +4,7 @@ description: Configure Docker in Windows
 keywords: docker, containers
 author: PatrickLang
 ms.date: 05/03/2019
-ms.topic: article
-ms.prod: windows-containers
-ms.service: windows-containers
+ms.topic: overview
 ms.assetid: 6885400c-5623-4cde-8012-f6a00019fafa
 ---
 # Docker Engine on Windows
@@ -40,7 +38,7 @@ The preferred method for configuring the Docker Engine on Windows is using a con
     "storage-driver": "",
     "storage-opts": [],
     "labels": [],
-    "log-driver": "", 
+    "log-driver": "",
     "mtu": 0,
     "pidfile": "",
     "data-root": "",
@@ -76,7 +74,7 @@ Likewise, the following sample configures the Docker daemon to keep images and c
 default is `c:\programdata\docker`.
 
 ```json
-{    
+{   
     "data-root": "d:\\docker"
 }
 ```
@@ -201,6 +199,11 @@ After you uninstall Docker, you'll need to remove Docker's default networks so t
 
 ```powershell
 Get-HNSNetwork | Remove-HNSNetwork
+```
+
+To remove Docker's default networks on Windows Server 2016.
+```powershell
+Get-ContainerNetwork | Remove-ContainerNetwork
 ```
 
 Run the following cmdlet to remove Docker's program data from your system:

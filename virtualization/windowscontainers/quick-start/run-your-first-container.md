@@ -1,13 +1,11 @@
 ---
-title: Windows and Linux Containers on Windows 10
+title: Run your first Windows container
 description: Container deployment quick start
 keywords: docker, containers, LCOW
 author: cwilhit
 ms.author: crwilhit
 ms.date: 11/12/2019
-ms.topic: article
-ms.prod: windows-containers
-ms.service: windows-containers
+ms.topic: quickstart
 ms.assetid: bb9bfbe0-5bdc-4984-912f-9c93ea67105f
 ---
 # Get started: Run your first Windows container
@@ -50,7 +48,7 @@ For this simple example, a ‘Hello World’ container image will be created and
    ```cmd
    echo "Hello World!" > Hello.txt
    exit
-   ```   
+   ```
 
 3. Get the container ID for the container you just exited by running the [docker ps](https://docs.docker.com/engine/reference/commandline/ps/) command:
 

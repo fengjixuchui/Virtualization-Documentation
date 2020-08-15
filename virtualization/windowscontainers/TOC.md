@@ -1,4 +1,4 @@
-# [Containers on Windows Documentation](index.md) 
+# [Containers on Windows Documentation](index.yml) 
 
 # Overview
 ## [About Windows containers](about/index.md)
@@ -26,7 +26,7 @@
 ### [Migrate an ASP.NET app with Windows containers and Azure App Service](/azure/app-service/app-service-web-tutorial-windows-containers-custom-fonts)
 ## Linux containers on Windows
 ### [Overview](deploy-containers/linux-containers.md)
-### [Run your first LCOW container](quick-start/quick-start-windows-10-linux.md)
+### [Run your first Linux container](quick-start/quick-start-windows-10-linux.md)
 ## Use containers with the Windows Insider program
 ### [Overview](deploy-containers/insider-overview.md)
 
@@ -44,13 +44,7 @@
 ### [Overview](about/overview-container-orchestrators.md)
 ### Kubernetes on Windows
 #### [Kubernetes on Windows](kubernetes/getting-started-kubernetes-windows.md)
-#### [Create a Kubernetes Master](kubernetes/creating-a-linux-master.md)
-#### [Choose a network solution](kubernetes/network-topologies.md)
-#### [Join Windows workers](kubernetes/joining-windows-workers.md)
-#### [Join Linux workers](kubernetes/joining-linux-workers.md)
-#### [Deploy Kubernetes resources](kubernetes/deploying-resources.md)
 #### [Troubleshooting](kubernetes/common-problems.md)
-#### [Kubernetes as a Windows service](kubernetes/kube-windows-services.md)
 #### [Compile Kubernetes binaries](kubernetes/compiling-kubernetes-binaries.md)
 ### Service Fabric
 #### [Service Fabric and Containers](/azure/service-fabric/service-fabric-containers-overview)
@@ -84,6 +78,7 @@
 ## [Container OS image EULA](Images_EULA.md)
 
 # Resources
+## [Known Issues](manage-containers/known-issues.md)
 ## [Container samples](samples.md)
 ## [Troubleshooting](troubleshooting.md)
 ## [Container forum](https://social.msdn.microsoft.com/Forums/home?forum=windowscontainers)
